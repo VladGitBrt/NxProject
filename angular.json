@@ -1,0 +1,150 @@
+{
+  "version": 1,
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "defaultProject": "weather",
+  "schematics": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "style": "css",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "css",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "css"
+    }
+  },
+  "projects": {
+    "weather": {
+      "projectType": "application",
+      "root": "apps/weather",
+      "sourceRoot": "apps/weather/src",
+      "prefix": "projects",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/weather",
+            "index": "apps/weather/src/index.html",
+            "main": "apps/weather/src/main.ts",
+            "polyfills": "apps/weather/src/polyfills.ts",
+            "tsConfig": "apps/weather/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/weather/src/favicon.ico",
+              "apps/weather/src/assets"
+            ],
+            "styles": ["apps/weather/src/styles.css"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/weather/src/environments/environment.ts",
+                  "with": "apps/weather/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "weather:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "weather:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "weather:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/weather/src/**/*.ts",
+              "apps/weather/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/weather"],
+          "options": {
+            "jestConfig": "apps/weather/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "weather-e2e": {
+      "root": "apps/weather-e2e",
+      "sourceRoot": "apps/weather-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/weather-e2e/cypress.json",
+            "tsConfig": "apps/weather-e2e/tsconfig.e2e.json",
+            "devServerTarget": "weather:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "weather:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/weather-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  }
+}
