@@ -145,6 +145,31 @@
           }
         }
       }
+    },
+    "getlocation": {
+      "projectType": "library",
+      "root": "libs/getlocation",
+      "sourceRoot": "libs/getlocation/src",
+      "prefix": "projects",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/getlocation/src/**/*.ts",
+              "libs/getlocation/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/getlocation"],
+          "options": {
+            "jestConfig": "libs/getlocation/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }

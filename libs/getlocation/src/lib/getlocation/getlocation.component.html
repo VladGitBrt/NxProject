@@ -1,0 +1,14 @@
+<input type="text" #inputcountry [value]="geoResults" />
+<button type="submit" (click)="findCountry(inputcountry.value)">
+  {{ btnText }}
+</button>
+<p>Weather Info</p>
+<hr />
+<div class="weather-container">
+  <div class="weather-card" *ngFor="let i of weatherArr">
+    <p>{{ i.cityName }}</p>
+    <p>Temperature : {{ i.temperature }}</p>
+    <p>Pressure : {{ i.pressure }} Pascal</p>
+    <p>Description : {{ i.weatherDescription }}</p>
+  </div>
+</div>
