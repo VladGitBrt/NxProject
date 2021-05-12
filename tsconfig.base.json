@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@projects/getlocation": ["libs/getlocation/src/index.ts"]
+      "@projects/getlocation": ["libs/getlocation/src/index.ts"],
+      "@projects/data": ["libs/data/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -19,6 +19,7 @@
   "projects": {
     "weather": { "tags": [] },
     "weather-e2e": { "tags": [], "implicitDependencies": ["weather"] },
-    "getlocation": { "tags": [] }
+    "getlocation": { "tags": [] },
+    "data": { "tags": [] }
   }
 }

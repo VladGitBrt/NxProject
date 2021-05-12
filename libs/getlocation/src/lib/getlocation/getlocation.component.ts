@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-export interface WeatherData {
-  cityName: string;
-  temperature: string;
-  pressure: string;
-  weatherDescription: string;
-}
+import { WeatherRequest } from '@projects/data';
+import { LocationRequest } from '@projects/data';
+import { WeatherData } from '@projects/data';
+import { data } from '@projects/data';
 
 @Component({
   selector: 'projects-getlocation',
@@ -20,10 +17,11 @@ export class GetlocationComponent implements OnInit {
   geoResults: string;
   btnText = 'SEND';
   result;
-  value;
-  weatherArr = [];
+  value: WeatherData;
+  weatherArr: WeatherData[] = [];
   constructor(private getLocation: HttpClient, private http: HttpClient) {}
   ngOnInit() {
+    data();
     navigator.geolocation.getCurrentPosition((result) => {
       console.log(result);
       const lat = result.coords.latitude;
@@ -36,6 +34,7 @@ export class GetlocationComponent implements OnInit {
   }
   findCountry(name: string): void {
     this.sendRequest(name).subscribe((result) => {
+      console.log(result);
       (this.result = result),
         (this.value = {
           cityName: this.result.name,
@@ -47,16 +46,16 @@ export class GetlocationComponent implements OnInit {
     });
     console.log(this.weatherArr);
   }
-  sendRequest(name: string): Observable<any> {
-    return this.http.get(
+  sendRequest(name: string): Observable<WeatherRequest> {
+    return this.http.get<WeatherRequest>(
       'http://api.openweathermap.org/data/2.5/weather?q=' +
         name +
         '&APPID=' +
         this.weatherKey
     );
   }
-  getGeo(lat: number, lon: number): Observable<any> {
-    return this.getLocation.get(
+  getGeo(lat: number, lon: number): Observable<LocationRequest> {
+    return this.getLocation.get<LocationRequest>(
       `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lon}&key=${this.locationKey}&language=ru&pretty=1`
     );
   }
