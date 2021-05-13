@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { WeatherRequest } from '@projects/data';
 import { LocationRequest } from '@projects/data';
 import { WeatherData } from '@projects/data';
-import { data } from '@projects/data';
 
 @Component({
   selector: 'projects-getlocation',
