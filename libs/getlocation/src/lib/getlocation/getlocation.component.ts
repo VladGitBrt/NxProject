@@ -20,7 +20,6 @@ export class GetlocationComponent implements OnInit {
   weatherArr: WeatherData[] = [];
   constructor(private getLocation: HttpClient, private http: HttpClient) {}
   ngOnInit() {
-    data();
     navigator.geolocation.getCurrentPosition((result) => {
       console.log(result);
       const lat = result.coords.latitude;
